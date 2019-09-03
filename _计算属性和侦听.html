@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <p>original message: "{{ message }}"</p>
+    <p>computed reversed message: "{{ reversedMessage }}"</p>
+    <p>
+      <input type="text" v-model="firstName">
+      <br>
+      <input type="text" v-model="lastName">
+      <p>{{fullName}}</p>
+    </p>
+  </div>
+  <script src="./lib/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello',
+        firstName: 'Vince',
+        lastName: 'Lee'
+      },
+      /*
+        计算属性是基于它们的响应式依赖进行的，只有当响应式依赖发生改变时，它们才会重新求值，
+        反之多次访问计算属性会立即返回之前的计算结果
+      */
+      computed: {
+        reversedMessage: function () {
+          return this.message.split('').reverse().join()
+        },
+        fullName: function () {
+          return this.firstName + ' ' + this.lastName
+        }
+      }
+    })
+  </script>
+</body>
+</html>
