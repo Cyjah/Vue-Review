@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in items">
+        {{ parentMessate }} - {{ index }} - {{ item.message }}
+        <button @click="deleteIndex(index)">删除</button>
+        <button>更新</button>
+      </li>
+      <br>
+      <li v-for="(value, name, index) in object">
+        {{ index }}. {{ name }} - {{ value }}
+      </li>
+      <br>
+      <input type="text" v-model="searchName">
+      <br>
+      <li v-for="(item, index) in filterPersons" :key="index">
+        {{ index }} - {{ item.name }} - {{ item.age }}
+      </li>
+      <button @click="setOrderType(1)">年龄升序</button>
+      <button @click="setOrderType(2)">年龄降序</button>
+      <button @click="setOrderType(0)">原本顺序</button>
+    </ul>
+  </div>
+  <script src="lib/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        parentMessate: 'Parent',
+        searchName: '',
+        orderType: 0,  // 0代表原本顺序，1代表升序，2代表降序
+        items: [
+          { message: 'Foo' },
+          { message: 'Bar' }
+        ],
+        object: {
+          tittle: 'How to do lists in value',
+          author: 'Vince',
+          publishedAt: '2019-09-09'
+        },
+        persons: [
+          { name: 'Tom', age: 18 },
+          { name: 'jack', age: 16 },
+          { name: 'Bob', age: 19 },
+          { name: 'Rose', age: 17 }
+        ]
+      },
+      methods: {
+        deleteIndex (index) {
+          this.items.splice(index, 1)
+        },
+        setOrderType (orderType) {
+          this.orderType = orderType
+        }
+      },
+      computed: {
+        filterPersons () {
+          // console.log(this)
+          // 取出相关的数据
+          const { searchName, persons, orderType } = this
+          // console.log(searchName)
+          // console.log(persons)
+          // 最终需要显示的数组
+          let fPersons = persons.filter( item => item.name.indexOf(searchName) !== -1 )
+       
+          if ( orderType !== 0 ) {
+            fPersons.sort( function (item1, item2) {
+              console.log(this)
+              if( orderType === 1 ) {
+                return item1.age - item2.age
+              } else {
+                return item2.age - item1.age
+              }
+            })
+          }
+          return fPersons
+        }
+      }
+    })
+  </script>
+</body>
+</html>

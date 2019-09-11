@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .classOne {
+      color: blue;
+    }
+    .classTwo {
+      color: red;
+    }
+    .classThree {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h4>class绑定  :class="xxx"</h4>
+    <p :class="a">1.字符串的方式绑定class，xxx是字符串</p>
+    <button v-on:click="update">更新1</button>
+    <p :class="{ classOne: isA, classTwo: isB }">2.对象方式绑定字符串，xxx是对象</p>
+    <button @click="update2">更新2</button>
+    <p :class="[a, b, c]">3.数组的方式绑定字符串，xxx是数组</p>
+    <h4>style绑定</h4>
+    <p :style="{color: activeColor, fontSize: activeFontSize + 'px'}">更换过后的样式</p>
+    <button @click="update3">更新3</button>
+  </div>
+  <script src="lib/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        a: 'classOne',
+        b: 'classTwo',
+        c: 'classThree',
+        isA: true,
+        isB: false,
+        activeColor: 'red',
+        activeFontSize: 20
+      },
+      methods: {
+        update () {
+          console.log(this)
+          console.log('点击测试')
+          this.a = 'classThree'
+        },
+        update2 () {
+          // if (this.isA === true) {
+          //   this.isA = false
+          //   this.isB = true
+          // } else {
+          //   this.isA = true
+          //   this.isB = false
+          // }
+          [this.isA, this.isB] = [this.isB, this.isA]
+        },
+        update3 () {
+          this.activeColor = 'blue'
+          this.activeFontSize = 50
+        }
+      }
+    })
+  </script>
+</body>
+</html>

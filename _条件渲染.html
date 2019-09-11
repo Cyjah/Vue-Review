@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h3>v-if</h3>
+    <p v-if="type === 'A'">A</p>
+    <p v-else-if="type === 'B'">B</p>
+    <p v-else>not A/B</p>
+    <button @click="type = 'A'">为A</button>
+    <button @click="type = 'B'">为B</button>
+    <button @click="type ='C'">不为A/B</button>
+    <br>
+    <h4>未使用key效果</h4>
+    <template v-if="loginType === 'username'">
+        <label for="">userName</label>
+        <input type="text" placeholder="请输入用户名">
+      </template>
+      <template v-else>
+        <label for="">Email</label>
+        <input type="text" placeholder="请输入邮箱">
+      </template>
+    <h4>用key管理可复用元素，表达这两个元素是完全独立的,不要复用他们</h4>
+    <template v-if="loginType === 'username'">
+      <label for="">userName</label>
+      <input type="text" placeholder="请输入用户名" key="userName-input">
+    </template>
+    <template v-else>
+      <label for="">Email</label>
+      <input type="text" placeholder="请输入邮箱" key="userEmail-input">
+    </template>
+    <button @click="toggle">切换</button>
+
+    <h3>v-show</h3>
+    <p v-show="isActive">v-show的效果</p>
+    <button @click="isActive = !isActive">切换v-show</button>
+    <p>v-show始终会渲染并且保留在DOM中,它的效果相当于display: none,
+      而v-if是真正的条件渲染，每次切换过程中条件块内的事件和子组件都会被销毁和重建
+      <b>v-if有更高的切换开销，v-show有更高的初始渲染开销</b>
+    </p>
+  </div>
+  <script src="lib/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        type: 'A',
+        loginType: 'username',
+        isActive: 'true'
+      },
+      methods: {
+        toggle () {
+          this.loginType = 'useremail'
+        }
+      }
+    })
+  
+  </script>
+</body>
+</html>
