@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity, .5s;
+    }
+    .fade-enter, .fade-leave-to {
+      opacity: 0;
+    }
+    .slide-fade-enter-active {
+      transition: all .3s ease
+    }
+    .slide-fade-leave-active {
+      transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button @click="isShow = !isShow">toggle</button>
+    <!-- <transition name="fade"> -->
+      <!-- <p v-show="isShow">hello</p> -->
+    <!-- </transition> -->
+    <button @click="isShow = !isShow">Toggle render</button>
+    <transition name="slide-fade">
+      <p v-show="isShow">hello world</p>
+    </transition>
+  </div>
+  <script src="lib/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        isShow: true
+      }
+    })
+  </script>
+</body>
+</html>

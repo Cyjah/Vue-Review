@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <p ref="content">www.baidu.com</p>
+    <button @click="hint">提示</button>
+    <br>
+    这个指令跟[v-cloak] {display:none;}组合使用时，可以隐藏未编译的Mustache标签直到实例准备完毕
+    <p v-cloak>测试v-cloak</p>
+    <h3>自定义指令：</h3>
+    <!-- 1：将字母转为大写
+    <p v-upper-text="msg"></p>
+    2：将字母转为小写
+    <p v-upper-text="msg"></p> -->
+    自定义v-focus,实现自聚焦状态
+    <br>
+    <input type="text" v-focus>
+    <h5>使用了el、binding等属性的自定义钩子样例</h5>
+    <p v-demo:foo.a.b="msg"></p>
+  </div>
+  <script src="lib/vue.js"></script>
+  <script>
+    // 注册全局自定义指令
+    Vue.directive('focus', {
+      // 当元素被插入到DOM中时...
+      inserted: function (el) {
+        // 聚焦元素
+        el.focus()
+      }
+    })
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'NBA I Love This Game!'
+      },
+      methods: {
+        hint () {
+          alert(this.$refs.content.innerHTML)
+        }
+      },
+      // 注册局部指令
+      directives: {
+        demo: {
+          bind: function (el, binding, vnode) {
+            var s = JSON.stringify
+            el.innerHTML = `
+              name:${s(binding.name)}<br>
+              value:${s(binding.value)}<br>
+              expression:${s(binding.expression)}<br>
+              argument:${s(binding.arg)}<br>
+              modifiers:${s(binding.modifiers)}<br>
+              vnode keys:${Object.keys(vnode).join(',')}
+            `
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

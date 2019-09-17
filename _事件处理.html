@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h2>绑定监听</h2>
+    <button @click="test(123, $event)">test</button>
+    <h2>事件修饰符</h2>
+    <div style="width: 200px; height: 200px; background: red " @click="test2">
+      <!-- 
+        @click.stop 阻止点击事件继续传播
+        @click.prevent 阻止事件默认行为
+        更多事件修饰符参阅Vue.js官方文档
+       -->
+      <div style="width: 100px; height: 100px; background: blue" @click.stop="test3"></div>
+    </div>
+    <h2>按键修饰符</h2>
+    <input type="text" @keyup.13="test4">
+    <input type="text" @keyup.enter="test5">
+  </div>
+  <script src="lib/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+       
+      },
+      methods: {
+        test (number, event) {
+          alert(`${number}----${event.target.innerHTML}`)
+        },
+        test2 () {
+          alert('点击了外面')
+        },
+        test3 () {
+          alert('点击了里面')
+        },
+        test4 (event) {
+          alert(event.target.value)
+        },
+        test5 (event) {
+          alert(event.target.value)
+        }
+      }
+    })
+  
+  </script>
+</body>
+</html>
